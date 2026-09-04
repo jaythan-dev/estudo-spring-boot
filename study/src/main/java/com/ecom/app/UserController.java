@@ -1,5 +1,6 @@
 package com.ecom.app;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -32,5 +33,14 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+    @DeleteMapping("/api/users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        try{
+            userService.deleteUser(id);
+            return ResponseEntity.ok("Usuário deletado com sucesso");
+        } catch(EmptyResultDataAccessException e){
+            return ResponseEntity.notFound().build();
+        }
 
+    }
 }

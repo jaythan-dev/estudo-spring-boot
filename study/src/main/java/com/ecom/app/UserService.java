@@ -1,7 +1,9 @@
 package com.ecom.app;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -26,9 +28,6 @@ public class UserService {
     public void addUser(User user) {
         userRepository.save(user);
     }
-    public void changeFirstName(Long id, String newName){
-
-    }
     public boolean updateUser(Long id, User updatedUser){
         return userRepository.findById(id)
                 .map(existingUser ->{
@@ -37,6 +36,12 @@ public class UserService {
                     userRepository.save(updatedUser);
                     return true;
                 }).orElse(false);
+    }
+    public void deleteUser(Long id) {
+        if(!userRepository.existsById(id)){
+            throw new EmptyResultDataAccessException(1);
+        }
+        userRepository.deleteById(id);
     }
 
 }
