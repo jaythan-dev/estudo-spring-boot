@@ -1,14 +1,11 @@
 package com.ecom.app;
 
+import com.ecom.app.model.User;
+import com.ecom.app.repository.userRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +30,7 @@ public class UserService {
                 .map(existingUser ->{
                     existingUser.setFirstName(updatedUser.getFirstName());
                     existingUser.setLastName(updatedUser.getLastName());
-                    userRepository.save(updatedUser);
+                    userRepository.save(existingUser);
                     return true;
                 }).orElse(false);
     }

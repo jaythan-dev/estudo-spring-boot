@@ -22,7 +22,9 @@ public class UserController {
     }
     @PostMapping("/api/users")
     public ResponseEntity<String> addUser(@RequestBody User user){
+        user.setUserRole(UserRole.CUSTOMER);
         userService.addUser(user);
+
         return ResponseEntity.ok("user successfully created");
     }
     @PutMapping("/api/users/{id}")
